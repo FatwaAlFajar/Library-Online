@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up</title>
-  <link rel="stylesheet" href="Signup.css">
+  <link rel="stylesheet" href="AnoSignup.css">
   <link rel="icon" href="https://github.com/FatwaAlFajar/Library-Online/blob/main/Library%20Online/Book%20Icon.png?raw=true" type="image/png">
 </head>
 <body>
@@ -14,30 +14,34 @@
       <div class="menu">
         <ul>
           <li><a href="Landing.html">Home</a></li>
-          <li><a href="Login.html" class="tbl-biru">Login</a></li>
+          <li><a href="Signup.html" class="tbl-biru">Sign Up</a></li>
         </ul>
       </div>
     </div>
   </nav>
   <h1>Sign Up Account</h1>
   <form action="/signup" method="post">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
+    <p>
+      <button class="LoginGoogle">
+        Google
+      </button>
+    </p>
+    <p>
+      <button class="LoginFacebook">
+        Facebook
+      </button>
+    </p>
+    <p>
+      <button class="LoginTwitter">
+        Twitter
+      </button>
+    </p>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-
-    <input type="submit" value="Create Account">
     <p>
       <label>Already have an account?</label>
       <label><a href="Login.html">Login</label>
     </p>
 
-    <a>another way to create</a>
-    <a  href="AnoSignup.html"> Click here</a>
   </form>
 </body>
 </html>
