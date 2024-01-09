@@ -1,0 +1,125 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+.wrapper {
+  width: 1700px;
+  margin: auto;
+  position: relative;
+}
+
+.logo a {
+  font-size: 50px;
+  font-weight: bold;
+  float: left;
+  font-family: courier;
+  color: #364F6B;
+  text-decoration: none;
+}
+
+.menu {
+  float: right;
+}
+
+nav {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  line-height: 80px;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  background: #FFFFFF;
+  z-index: 1;
+  border-bottom: 1px solid #364F6B;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+nav ul li {
+  float: left;
+}
+
+nav ul li a {
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  padding: 0px 16px 0px 16px;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+.tbl-biru {
+  background: #3f72af;
+  border-radius: 20px;
+  margin-top: 20px;
+  padding: 15px 20px 15px 20px;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tbl-biru:hover {
+  background: #FC5185;
+  text-decoration: none;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+
+input[type="submit"] {
+  background-color: #3f72af;
+  color: white;
+  cursor: pointer;
+  width: 50%;
+}
