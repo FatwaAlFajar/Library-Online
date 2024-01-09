@@ -1,0 +1,10 @@
+table {
+  background-color: white;
+  padding: 1em;
+  border-radius: 2em;
+  box-shadow: 0 0 7px 0 #888888;
+}
+
+th, tr, td {
+  padding: 1em;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="Signup.css">
+  <link rel="icon" href="https://github.com/FatwaAlFajar/Library-Online/blob/main/Library%20Online/Book%20Icon.png?raw=true" type="image/png">
+</head>
+
+<body>
+  <nav>
+    <div class="wrapper">
+      <div class="logo"><a href="Landing.html">YourLibs</a></div>
+      <div class="menu">
+        <ul>
+          <li><a href="Landing.html">Home</a></li>
+          <li><a href="Login.html" class="tbl-biru">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <h1>Sign Up Account</h1>
+
+  <div id="app">
+    <form action="/signup" method="post" @submit.prevent="submitForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" v-model="name" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" v-model="email" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" v-model="password" required>
+
+      <input type="submit" value="Create Account">
+      <p>
+        <label>Already have an account?</label>
+        <label><a href="Login.html">Login</a></label>
+      </p>
+
+      <a>another way to create</a>
+      <a href="AnoSignup.html"> Click here</a>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          name: "",
+          email: "",
+          password: "",
+        };
+      },
+
+      beforeCreate() {
+        const id = localStorage.getItem("id");
+
+        if (id !== null) {
+          window.location.href = 'ListBuku.html';
+        }
+      },
+
+      methods: {
+        submitForm() {
+          const userData = {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+          };
+
+          fetch('http://localhost:9888/user/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData),
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log("Registration successful:", data);
+              localStorage.setItem('id', data.data.id);
+              // Handle successful registration, e.g., redirect or show a success message
+            })
+            .catch(error => {
+              console.error("Error:", error);
+              // Handle registration error, e.g., show an error message
+            });
+        }
+      }
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="table.css">
+  <title>List Anggota</title>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <nav>
+        <div class="wrapper">
+          <div class="logo"><a href="Landing.css">YourLibs</a></div>
+          <div class="menu">
+            <ul>
+              <li><a href="ListBuku.html">Buku</a></li>
+              <li><a href="TambahBuku.html">Tambah Buku</a></li>
+              <li><a href="ListAnggota.html">Anggota</a></li>
+              <li><a href="TambahAnggota.html">Tambah Anggota</a></li>
+              <li><a href="ListPinjaman.html">Pinjaman</a></li>
+              <li><a href="PinjamanBaru.html">Tambah Pinjaman</a></li>
+              <li><a @click="logOut">LogOut</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <section>
+        <table style="width: 100%;">
+          <tr>
+            <th>ISBN</th>
+            <th>Judul</th>
+            <th>Penulis</th>
+            <th>Penerbit</th>
+            <th>Kota</th>
+            <th>Tahun</th>
+            <th>Stok</th>
+          </tr>
+
+          <tr v-for="book in books" :key="book.id">
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.publisher }}</td>
+            <td>{{ book.city }}</td>
+            <td>{{ book.year }}</td>
+            <td>{{ book.quantity }}</td>
+          </tr>
+        </table>
+      </section>
+    </div>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        books: []
+      }
+    },
+
+    mounted() {
+      fetch('http://localhost:9888/books/all')
+        .then(response => response.json())
+        .then(data => {
+          const buku = data.data;
+
+          this.books = buku
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    },
+
+    methods: {
+      logOut() {
+        localStorage.removeItem('id');
+        window.location.href = "Landing.html";
+      }
+    },
+
+    beforeCreate() {
+        const id = localStorage.getItem("id");
+
+        if (id == null) {
+          window.location.href = 'Landing.html';
+        }
+      },
+  });
+
+  app.mount('#app');
+</script>
+</html>

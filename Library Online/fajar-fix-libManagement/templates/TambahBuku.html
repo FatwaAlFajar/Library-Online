@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambah Buku</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="form.css">
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <div class="wrapper">
+        <div class="logo"><a href="Landing.css">YourLibs</a></div>
+        <div class="menu">
+          <ul>
+            <li><a href="ListBuku.html">Buku</a></li>
+            <li><a href="TambahBuku.html">Tambah Buku</a></li>
+            <li><a href="ListAnggota.html">Anggota</a></li>
+            <li><a href="TambahAnggota.html">Tambah Anggota</a></li>
+            <li><a href="ListPinjaman.html">Pinjaman</a></li>
+            <li><a href="PinjamanBaru.html">Tambah Pinjaman</a></li>
+            <li><a @click="logOut">LogOut</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <section>
+      <div id="app">
+        <form class="form" @submit.prevent="tambahBuku">
+          <div class="flex-column">
+            <label>ISBN</label>
+          </div>
+          <div class="inputForm">
+            <input
+              v-model="isbn"
+              type="text"
+              class="input"
+              placeholder="Masukkan isbn"
+            />
+          </div>
+
+          <div class="flex-column">
+            <label>Judul Buku</label>
+          </div>
+          <div class="inputForm">
+            <input
+              v-model="judul"
+              type="text"
+              class="input"
+              placeholder="Masukkan judul buku"
+            />
+          </div>
+
+          <div class="flex-column">
+            <label>Penulis</label>
+          </div>
+          <div class="inputForm">
+            <input
+              v-model="penulis"
+              type="text"
+              class="input"
+              placeholder="Masukkan penulis"
+            />
+          </div>
+
+          <div class="flex-column">
+            <label>Penerbit</label>
+          </div>
+          <div class="inputForm">
+            <input
+              v-model="penerbit"
+              type="text"
+              class="input"
+              placeholder="Masukkan penerbit"
+            />
+          </div>
+
+          <div class="flex-column">
+            <label>Kota Terbit</label>
+          </div>
+          <div class="inputForm">
+            <input
+              v-model="kota"
+              type="text"
+              class="input"
+              placeholder="Masukkan kota terbit"
+            />
+          </div>
+
+          <div class="flex-column">
+            <label>Tahun Terbit</label>
+          </div>
+          <div class="inputForm">
+            <input
+              v-model="tahun"
+              type="text"
+              class="input"
+              placeholder="Masukkan tahun terbit"
+            />
+          </div>
+
+          <div class="flex-column">
+            <label>Jumlah Buku</label>
+          </div>
+          <div class="inputForm">
+            <input
+              v-model="jumlah"
+              type="number"
+              class="input"
+              placeholder="Masukkan jumlah buku"
+            />
+          </div>
+
+          <input type="submit" class="button-submit" value="Tambah Buku">
+        </form>
+      </div>
+    </section>
+  </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        isbn: "",
+        judul: "",
+        penulis: "",  // Corrected property name
+        penerbit: "",
+        kota: "",
+        tahun: "",
+        jumlah: "",
+      }
+    },
+
+    methods: {
+      tambahBuku() {
+        const bookData = {
+          Isbn: this.isbn,
+          Title: this.judul,      // Corrected property name
+          Author: this.penulis,   // Corrected property name
+          Publisher: this.penerbit,
+          City: this.kota,
+          Year: this.tahun,
+          Quantity: this.jumlah,
+        };
+
+        fetch('http://localhost:9888/book/tambah', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bookData),
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            window.location.href = "ListBuku.html";  // Redirect to the appropriate page
+            console.log("Book added successfully:", data);
+            // Handle successful book addition, e.g., show a success message
+          })
+          .catch(error => {
+            console.error("Error:", error);
+            // Handle book addition error, e.g., show an error message to the user
+            alert("Book addition failed. Please try again.");
+          });
+      },
+
+      logOut() {
+        localStorage.removeItem('id');
+        window.location.href = "Landing.html";
+      }
+    },
+
+    beforeCreate() {
+      const id = localStorage.getItem("id");
+
+      if (id === null) {
+        window.location.href = 'Landing.html';
+      }
+    },
+  });
+
+  app.mount('#app');
+</script>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pinjaman</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="form.css">
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <div class="wrapper">
+        <div class="logo"><a href="Landing.css">YourLibs</a></div>
+        <div class="menu">
+          <ul>
+            <li><a href="ListBuku.html">Buku</a></li>
+            <li><a href="TambahBuku.html">Tambah Buku</a></li>
+            <li><a href="ListAnggota.html">Anggota</a></li>
+            <li><a href="TambahAnggota.html">Tambah Anggota</a></li>
+            <li><a href="ListPinjaman.html">Pinjaman</a></li>
+            <li><a href="PinjamanBaru.html">Tambah Pinjaman</a></li>
+            <li><a @click="logOut">LogOut</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <section>
+      <div id="app">
+        <form class="form" @submit.prevent="tambahAnggota">
+          <div class="flex-column">
+            <label>Nama Peminjam</label>
+          </div>
+          <div class="inputForm">
+            <input
+              v-model="anggota"
+              type="text"
+              class="input"
+              placeholder="Masukkan nama peminjam"
+            />
+          </div>
+
+          <div class="flex-column">
+            <label>Judul Buku</label>
+          </div>
+          <div class="inputForm">
+            <input
+              v-model="buku"
+              type="text"
+              class="input"
+              placeholder="Masukkan judul buku"
+            />
+          </div>
+
+          <input type="submit" class="button-submit" value="Tambah Pinjaman">
+        </form>
+      </div>
+    </section>
+  </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        buku: "",
+        anggota: "",
+      }
+    },
+
+    methods: {
+      tambahAnggota() {
+        const userData = {
+          isbn: this.buku,
+          nik: this.anggota,
+        };
+
+        fetch('http://localhost:9888/borrow/tambah', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userData),
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            window.location.href = "ListPinjaman.html";
+            console.log("Registration successful:", data);
+            // Handle successful registration, e.g., redirect or show a success message
+          })
+          .catch(error => {
+            console.error("Error:", error);
+            // Handle registration error, e.g., show an error message to the user
+            alert("Registration failed. Please try again.");
+          });
+      },
+
+      logOut() {
+        localStorage.removeItem('id');
+        window.location.href = "Landing.html";
+      }
+    },
+
+    beforeCreate() {
+      const id = localStorage.getItem("id");
+
+      if (id === null) {
+        window.location.href = 'Landing.html';
+      }
+    },
+  });
+
+  app.mount('#app');
+</script>
+</html>
